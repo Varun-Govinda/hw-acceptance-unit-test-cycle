@@ -1,0 +1,44 @@
+MoviesController
+  Looking for movies with same director
+    should not find movies - sad path
+    should find movies - happy path
+  Testing create method
+    should create movie
+  Testing update method
+    should update movie
+  Testing edit method
+    should edit movie
+  Testing show method
+    should show movie
+  Testing destroy method
+    should destroy movie
+  Testing new method
+    should open page for new movie
+  Testing index method
+    testing without sorting and filtering
+    testing with sorting
+    testing with filtering
+    testing with sorting and filtering
+    testing with session data
+
+Movie
+  Tests for same_director_movies
+    responds to same_director_movies
+    Happy path for same director movies
+      returns a list of movies with the same director
+    Sad path for same director movies
+      returns empty string
+  Test for all_ratings method
+    responds to all_ratings
+    testing if all_ratings returns correct data
+  Test for with_ratings method
+    responds to with_ratings
+    testing if with_ratings returns correct data when ratings passed is []
+    testing if with_ratings returns correct data when ratings passed is ['G']
+
+1 deprecation warning total
+
+Finished in 0.40102 seconds (files took 1.62 seconds to load)
+21 examples, 0 failures
+
+Coverage report generated for Cucumber Features, RSpec to /home/ec2-user/environment/hw-acceptance-unit-test-cycle/rottenpotatoes/coverage. 68 / 71 LOC (95.77%) covered.

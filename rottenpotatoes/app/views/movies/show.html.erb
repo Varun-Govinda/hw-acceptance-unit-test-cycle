@@ -7,10 +7,16 @@
     <%= @movie.rating %>
   </li>
   <li>
+    Director:
+    <%= @movie.director %>  
+  </li>
+  <li>
     Released on:
     <%= @movie.release_date.strftime("%B %d, %Y") %>
   </li>
 </ul>
+
+<%= link_to 'Find Movies With Same Director', same_director_path(@movie.id), :class =>  'link-info'%>
 
 <h3>Description:</h3>
 <p id="description">

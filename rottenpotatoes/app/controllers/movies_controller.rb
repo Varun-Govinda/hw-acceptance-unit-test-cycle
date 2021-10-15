@@ -7,7 +7,34 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    if request.original_fullpath == "/"
+      session.delete(:ratings)
+      session.delete(:selected_column)
+    end
+
+    @ratings_to_show =  []
+    @all_ratings = Movie.all_ratings
+    ratings =  @all_ratings
+    @selected_column = session[:selected_column]
+
+    if params[:home].present?
+      if params[:sort_column].present?
+        @selected_column = params[:sort_column]
+        session[:selected_column] = @selected_column
+      end
+      if  params[:ratings].present?
+        @ratings_to_show = params[:ratings].keys 
+        ratings = @ratings_to_show
+      end
+      session[:ratings] = @ratings_to_show
+
+    elsif session[:ratings].present?
+        ratings = session[:ratings]
+        @ratings_to_show = ratings
+    end
+
+    @movies = Movie.with_ratings(@selected_column,ratings)
+
   end
 
   def new
@@ -36,6 +63,18 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
+  end
+  
+  def same_director
+    @movie_id = params[:id]
+    @movie = Movie.where(id:params[:id])
+    @director =  @movie.pluck(:director)[0]
+    @movies = Movie.same_director_movies(params[:id])
+    # debugger
+    if @movies==nil || @movies==[]
+      flash[:warning] = "'#{ @movie.pluck(:title)[0]}' has no director info"
+      redirect_to movies_path
+    end
   end
 
   private
